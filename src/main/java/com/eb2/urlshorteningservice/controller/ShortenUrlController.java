@@ -7,7 +7,6 @@ import com.eb2.urlshorteningservice.service.ShortenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +15,6 @@ public class ShortenUrlController {
 
     private final ShortenService shortenService;
     private final ShortenRepository shortenRepository;
-    private final KafkaTemplate<String, String> kafkaTemplate;
 
     @PostMapping("/shorten")
     public Shorten shorten (@RequestBody RequestDto request) {
@@ -52,8 +50,6 @@ public class ShortenUrlController {
         shorten.setAccessCount(shorten.getAccessCount());
         shortenRepository.save(shorten);
 
-        kafkaTemplate.send("url", shortCode);
-
 
         return ResponseEntity.status(HttpStatus.FOUND)
                 .header("Location", url)
@@ -64,7 +60,7 @@ public class ShortenUrlController {
     public ResponseEntity<?> stats (@PathVariable String shortCode) {
         Shorten shorten = shortenService.getShortenByShortCode(shortCode);
 
-        //todo: add kafka to count stats
+
 
 
         return ResponseEntity.ok(shorten);
