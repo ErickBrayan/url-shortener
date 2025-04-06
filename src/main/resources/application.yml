@@ -9,5 +9,3 @@ spring:
       ddl-auto: create-drop
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
-  kafka:
-    bootstrap-servers: localhost:9092
