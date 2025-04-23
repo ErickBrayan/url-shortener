@@ -38,6 +38,8 @@ public class ShortenUrlController {
 
         shortenService.deleteShorten(shortenCode);
 
+        //todo: add stats hardcoded
+
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
                 .build();
     }
