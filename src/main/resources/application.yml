@@ -9,3 +9,9 @@ spring:
       ddl-auto: create-drop
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
+
+##Cache config
+cache:
+  url:
+    ttl: 24
+    max-size: 20

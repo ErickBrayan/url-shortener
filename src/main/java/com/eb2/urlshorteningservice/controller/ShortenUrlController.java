@@ -4,6 +4,7 @@ import com.eb2.urlshorteningservice.entities.RequestDto;
 import com.eb2.urlshorteningservice.entities.Shorten;
 import com.eb2.urlshorteningservice.repository.ShortenRepository;
 import com.eb2.urlshorteningservice.service.ShortenService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,28 +18,26 @@ public class ShortenUrlController {
     private final ShortenRepository shortenRepository;
 
     @PostMapping("/shorten")
-    public Shorten shorten (@RequestBody RequestDto request) {
+    public ResponseEntity<Shorten> shorten (@Valid @RequestBody RequestDto request) {
 
-
-        return shortenService.createShortenUrl(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(shortenService.createShortenUrl(request));
     }
 
     @GetMapping("/shorten/{shortCode}")
-    public Shorten shorten (@PathVariable String shortCode) {
-        return shortenService.getShortenByShortCode(shortCode);
+    public ResponseEntity<Shorten> getShorten (@PathVariable String shortCode) {
+
+        return ResponseEntity.status(HttpStatus.FOUND).body(shortenService.getShortenByShortCode(shortCode));
     }
 
     @PatchMapping("/shorten/{shortCode}")
-    public Shorten updateShorten (@PathVariable String shortCode, @RequestBody RequestDto request) {
-        return shortenService.updateUrl(shortCode, request);
+    public ResponseEntity<Shorten> updateShorten (@PathVariable String shortCode, @RequestBody RequestDto request) {
+        return ResponseEntity.ok(shortenService.updateUrl(shortCode, request));
     }
 
     @DeleteMapping("/shorten/{shortenCode}")
     public ResponseEntity<Void> deleteShorten (@PathVariable String shortenCode) {
 
         shortenService.deleteShorten(shortenCode);
-
-        //todo: add stats hardcoded
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT)
                 .build();
@@ -49,7 +48,7 @@ public class ShortenUrlController {
         Shorten shorten = shortenService.getShortenByShortCode(shortCode);
 
         String url = shorten.getUrl();
-        shorten.setAccessCount(shorten.getAccessCount());
+        shorten.setAccessCount(shorten.getAccessCount() + 1);
         shortenRepository.save(shorten);
 
 
@@ -61,9 +60,6 @@ public class ShortenUrlController {
     @GetMapping("/{shortCode}/stats")
     public ResponseEntity<?> stats (@PathVariable String shortCode) {
         Shorten shorten = shortenService.getShortenByShortCode(shortCode);
-
-
-
 
         return ResponseEntity.ok(shorten);
     }

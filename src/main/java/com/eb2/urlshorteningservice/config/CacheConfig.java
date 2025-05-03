@@ -17,10 +17,10 @@ import java.util.concurrent.TimeUnit;
 @EnableCaching
 public class CacheConfig {
 
-    @Value("${cache.url.ttl:24}")
+    @Value("${cache.url.ttl}")
     private long cacheUrlTtl;
 
-    @Value("${cache.url.max.size:3}")
+    @Value("${cache.url.max-size}")
     private long cacheUrlMaxSize;
 
 
