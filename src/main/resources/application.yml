@@ -1,6 +1,6 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.postgresql.Driver
     url: ${JDBC_DATABASE_URL}
     username: ${JDBC_DATABASE_USERNAME}
     password: ${JDBC_DATABASE_PASSWORD}
@@ -8,7 +8,7 @@ spring:
     hibernate:
       ddl-auto: update
     database: mysql
-    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 ##Cache config
 cache:
