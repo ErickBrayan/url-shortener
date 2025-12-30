@@ -1,12 +1,12 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/db_links?createDatabaseIfNotExist=true
-    username: root
-    password: 12345
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
 
@@ -15,3 +15,7 @@ cache:
   url:
     ttl: 24
     max-size: 20
+
+## Security config
+app:
+  api-key: ${API-KEY}

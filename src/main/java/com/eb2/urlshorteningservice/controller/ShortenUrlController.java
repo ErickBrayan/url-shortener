@@ -57,7 +57,7 @@ public class ShortenUrlController {
                 .build();
     }
 
-    @GetMapping("/{shortCode}/stats")
+    @GetMapping("shorten/{shortCode}/stats")
     public ResponseEntity<?> stats (@PathVariable String shortCode) {
         Shorten shorten = shortenService.getShortenByShortCode(shortCode);
 
