@@ -21,7 +21,7 @@ public class Shorten {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(length = 600)
+    @Column(length = 800)
     private String url;
 
     @Column(unique = true)
